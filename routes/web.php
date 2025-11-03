@@ -24,6 +24,12 @@ Route::post('webhook/tandem/{uuid}', [WebhookController::class, 'tandem'])
     ->name('payment.webhook.tandem');
 
 /**
+ * Hsbc webhook
+ */
+Route::post('webhook/hsbc/{uuid}', [WebhookController::class, 'hsbc'])
+    ->name('payment.webhook.hsbc');
+
+/**
  * Hometree webhook
  */
 Route::middleware('auth:sanctum')->group(function () {

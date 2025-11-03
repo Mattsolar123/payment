@@ -53,6 +53,11 @@ return [
         'endpoint' => env('PROPENSIO_ENDPOINT', config('app.env')),
     ],
 
+    'hsbc' => [
+        'api_key' => env('HSBC_API_KEY'),
+        'endpoint' => env('HSBC_ENDPOINT', config('app.env')),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Hometree Finance

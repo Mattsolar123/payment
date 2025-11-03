@@ -10,6 +10,7 @@ use Mralston\Payment\Enums\LookupField;
 use Mralston\Payment\Http\Requests\SubmitSurveyRequest;
 use Mralston\Payment\Interfaces\PaymentHelper;
 use Mralston\Payment\Models\PaymentLookupField;
+use Mralston\Payment\Models\PaymentOffer;
 use Mralston\Payment\Models\PaymentSurvey;
 use Mralston\Payment\Traits\BootstrapsPayment;
 
@@ -75,7 +76,7 @@ class SurveyController
             ->route('payment.options', ['parent' => $parentModel]);
     }
 
-    public function edit(int $parent, PaymentSurvey $survey, PaymentHelper $helper)
+    public function edit(Request $request, int $parent, PaymentSurvey $survey, PaymentHelper $helper)
     {
         $parentModel = $this->bootstrap($parent, $helper);
 
@@ -88,7 +89,8 @@ class SurveyController
                 ->paymentLookupValues,
             'titles' => PaymentLookupField::byIdentifier(LookupField::TITLE)
                 ->paymentLookupValues,
-            'allowSkip' => true,
+            'allowSkip' => $request->get('proceed_to_checkout') ? false : true,
+            'proceedToCheckout' => $request->get('proceed_to_checkout'),
             'showBasicQuestions' => true,
         ])->withViewData($helper->getViewData());
     }
@@ -174,6 +176,24 @@ class SurveyController
                 'lease_responses' => $request->get('leaseResponses'),
                 'finance_responses' => $request->get('financeResponses'),
             ]);
+
+
+        if ($request->get('proceed_to_checkout')) {
+
+            $survey
+                ->update([
+                    'skipped' => false,
+                ]);
+
+            $offerId = PaymentOffer::where('payment_survey_id', $survey->id)
+                ->where('selected', true)
+                ->first()
+                ->id;
+
+                return \Inertia\Inertia::location(
+                    route('payment.finance.create', ['parent' => $parentModel, 'offerId' => $offerId])
+                );
+        }
 
         if ($request->get('redirect')) {
             return redirect($request->get('redirect'));

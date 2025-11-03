@@ -74,6 +74,8 @@ const disabledCancellationButtons = computed(() => {
     return [];
 });
 
+console.log('Payment', payment.value.provider_response_data.errors);
+
 </script>
 
 <template>

@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
 use Laravel\Sanctum\Sanctum;
 use Mralston\Payment\Integrations\Hometree;
+use Mralston\Payment\Integrations\Hsbc;
 use Mralston\Payment\Integrations\Propensio;
 use Mralston\Payment\Integrations\Tandem;
 use Mralston\Payment\Interfaces\PaymentAddressLookup;
@@ -83,6 +84,15 @@ class PaymentServiceProvider extends ServiceProvider
             return new Propensio(
                 $helper->getApiKey('propensio') ?? config('payment.propensio.api_key'),
                 config('payment.propensio.endpoint'),
+            );
+        });
+
+        $this->app->singleton(Hsbc::class, function ($app) {
+            $helper = app(PaymentHelper::class);
+
+            return new Hsbc(
+                $helper->getApiKey('hsbc') ?? config('payment.hsbc.api_key'),
+                config('payment.hsbc.endpoint'),
             );
         });
 

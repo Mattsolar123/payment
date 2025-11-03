@@ -21,6 +21,10 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
+    proceedToCheckout: {
+        type: Boolean,
+        default: false,
+    },
     canChangePaymentMethod: {
         type: Boolean,
         default: false,
@@ -152,6 +156,7 @@ function submit()
                 'payment.surveys.store',
                 {
                     parent: props.parentModel,
+                    proceed_to_checkout: props.proceedToCheckout,
                 }
             ), {
                 onStart: () => navigating.value = submitting.value = true,
@@ -167,6 +172,7 @@ function submit()
             {
                 parent: props.parentModel,
                 survey: props.paymentSurvey,
+                proceed_to_checkout: props.proceedToCheckout,
             }
         ), {
             onStart: () => navigating.value = submitting.value = true,
@@ -240,6 +246,13 @@ onMounted(() => {
         <h1 class="text-4xl font-bold mb-4">{{ title }}</h1>
 
         <section v-if="showBasicQuestions">
+
+            <div v-if="proceedToCheckout" class="mb-4 bg-yellow-100 border-yellow-500 border-2 rounded-lg px-4 flex items-center">
+                <div>
+                    <ExclamationTriangleIcon class="h-2 w-2 text-yellow-500 mr-2" />
+                    <p class="mb-4"><b>The following survey is required to proceed for the lender.</b></p>
+                </div>
+            </div>
 
             <p class="mb-4">{{ basicIntroText }}</p>
 

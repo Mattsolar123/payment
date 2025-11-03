@@ -253,13 +253,13 @@ function unselectOffer() {
                         {{ employmentStatuses.find(status => status.value === survey.customers[0].employmentStatus)?.name }}
                     </td>
                 </tr>
-                <tr>
+                <tr v-if="!offer.payment_provider.is_payment_link">
                     <th class="p-1 mr-2">Account number</th>
                     <td class="p-1">
                         {{ survey.finance_responses.bankAccount.accountNumber }}
                     </td>
                 </tr>
-                <tr>
+                <tr v-if="!offer.payment_provider.is_payment_link">
                     <th class="bg-gray-100 p-1 mr-2">Sort code</th>
                     <td class="bg-gray-100 p-1">
                         {{ survey.finance_responses.bankAccount.sortCode }}

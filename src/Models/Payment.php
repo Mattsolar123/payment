@@ -105,6 +105,7 @@ class Payment extends Model
         'updated_at',
         'addresses',
         'prevent_payment_changes',
+        'payment_link',
     ];
 
     protected $casts = [

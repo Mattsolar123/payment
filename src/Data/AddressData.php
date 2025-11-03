@@ -23,4 +23,22 @@ class AddressData extends Data
     ) {
         //
     }
+
+    public function asString(): string
+    {
+        $map = [
+            $this->houseNumber,
+            $this->street,
+            $this->address1,
+            $this->address2,
+            $this->town,
+            $this->county,
+            $this->postCode,
+        ];
+
+        return implode(' ', array_filter($map, function($value) {
+            return $value !== null && trim($value) !== '';
+        }));
+    }   
+    
 }

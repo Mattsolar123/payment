@@ -67,7 +67,7 @@ class SubmitSurveyRequest extends FormRequest
                     'addresses.*.street' => ['required', 'string', 'max:255'],
                     'addresses.*.postCode' => ['required', 'string', 'max:255'],
                     'addresses.*.dateMovedIn' => ['required', 'date'],
-                    'addresses.*.uprn' => ['required_unless:addresses.*.manual,true'],
+                    //'addresses.*.uprn' => ['required_unless:addresses.*.manual,true'],
                     'addresses.*.homeAddress' => ['nullable','boolean'],
 
                     'creditCheckConsent' => 'accepted',
@@ -162,7 +162,7 @@ class SubmitSurveyRequest extends FormRequest
             'addresses.*.postCode.required' => 'You must enter a post code.',
             'addresses.*.dateMovedIn.required' => 'You must enter a date moved in.',
             'addresses.*.dateMovedIn.date' => 'The date moved in is not a valid date.',
-            'addresses.*.uprn.required_unless' => 'You must use the post code lookup button to select an exact address.',
+            //'addresses.*.uprn.required_unless' => 'You must use the post code lookup button to select an exact address.',
 
             'creditCheckConsent.accepted' => 'You must consent to the identity and credit check being performed.',
 
@@ -173,7 +173,7 @@ class SubmitSurveyRequest extends FormRequest
             'financeResponses.employerAddress.address1.required' => 'You must enter the first line.',
             'financeResponses.employerAddress.town.required' => 'You must enter the town.',
             'financeResponses.employerAddress.postCode.required' => 'You must enter the post code.',
-            'financeResponses.employerAddress.uprn.required_unless' => 'You must use the post code lookup button to select an exact address.',
+            //'financeResponses.employerAddress.uprn.required_unless' => 'You must use the post code lookup button to select an exact address.',
 
             'financeResponses.bankAccount.bankName.required' => 'You must enter the name of the bank.',
             'financeResponses.bankAccount.accountName.required' => 'You must enter the name of the account holder.',

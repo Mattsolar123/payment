@@ -38,7 +38,18 @@ class FinanceController
         $offer = PaymentOffer::findOrFail($request->get('offerId'));
         $survey = $parentModel->paymentSurvey;
 
-        if (!$survey->finance_questions_completed) {
+        if (
+            $survey->skipped &&
+            $offer->paymentProvider->is_payment_link
+        ) {
+            return redirect()
+                ->to(route('payment.surveys.edit', ['parent' => $parentModel, 'survey' => $survey]) . '?proceed_to_checkout=1');
+        }
+
+        if (
+            !$survey->finance_questions_completed &&
+            !$offer->paymentProvider->is_payment_link
+        ) {
             return redirect()
                 ->route('payment.surveys.finance', ['parent' => $parentModel, 'survey' => $survey, 'offerId' => $request->get('offerId')]);
         }
